@@ -1,22 +1,25 @@
 import { useInView } from '@/hooks/useInView';
-import { MapPin, Clock, Shirt } from 'lucide-react';
+import { MapPin, Clock, Calendar } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import dividerImage from '@/assets/javanese-divider.png';
+import ornamentFrame from '@/assets/javanese-ornament-corner.png';
 
 const events = [
   {
-    title: 'The Ceremony',
-    time: '3:00 PM',
-    venue: 'Garden Chapel',
-    address: 'The Grand Estate, 1200 Oak Grove Lane, Napa Valley, CA 94558',
-    dressCode: 'Formal Attire',
-    mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12462.193325645682!2d-122.42876!3d38.29757!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzjCsDE3JzUxLjMiTiAxMjLCsDI1JzQzLjUiVw!5e0!3m2!1sen!2sus!4v1234567890',
+    title: 'Akad Nikah',
+    date: 'Sabtu, 15 Juni 2025',
+    time: '08:00 - 10:00 WIB',
+    venue: 'Gedung Sasana Kriya',
+    address: 'Jl. Laksda Adisucipto No.1, Yogyakarta',
+    mapUrl: 'https://maps.google.com/?q=Gedung+Sasana+Kriya+Yogyakarta',
   },
   {
-    title: 'The Reception',
-    time: '5:30 PM',
-    venue: 'Grand Ballroom',
-    address: 'The Grand Estate, 1200 Oak Grove Lane, Napa Valley, CA 94558',
-    dressCode: 'Cocktail / Formal',
-    mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12462.193325645682!2d-122.42876!3d38.29757!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzjCsDE3JzUxLjMiTiAxMjLCsDI1JzQzLjUiVw!5e0!3m2!1sen!2sus!4v1234567890',
+    title: 'Resepsi',
+    date: 'Sabtu, 15 Juni 2025',
+    time: '11:00 - 14:00 WIB',
+    venue: 'Gedung Sasana Kriya',
+    address: 'Jl. Laksda Adisucipto No.1, Yogyakarta',
+    mapUrl: 'https://maps.google.com/?q=Gedung+Sasana+Kriya+Yogyakarta',
   },
 ];
 
@@ -24,17 +27,23 @@ const EventDetails = () => {
   const { ref, isInView } = useInView({ threshold: 0.1 });
 
   return (
-    <section id="event" className="section-padding bg-background">
-      <div className="container-wide">
+    <section id="event" className="section-padding bg-background relative overflow-hidden">
+      <div className="absolute inset-0 batik-pattern pointer-events-none opacity-30" />
+      
+      {/* Corner ornaments */}
+      <img src={ornamentFrame} alt="" className="absolute top-4 left-4 w-20 md:w-32 opacity-40" />
+      <img src={ornamentFrame} alt="" className="absolute top-4 right-4 w-20 md:w-32 opacity-40 -scale-x-100" />
+      
+      <div className="container-wide relative z-10">
         <div 
           ref={ref}
           className={`text-center mb-16 transition-all duration-700 ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
         >
-          <p className="elegant-subheading text-base mb-4 tracking-[0.2em] uppercase">Join us</p>
-          <h2 className="font-display text-4xl md:text-5xl font-medium text-foreground mb-6">
-            Event Details
+          <p className="elegant-subheading text-sm mb-4 tracking-[0.3em] uppercase">Waktu & Tempat</p>
+          <h2 className="font-display text-3xl md:text-4xl text-foreground mb-6">
+            Acara Pernikahan
           </h2>
-          <div className="w-16 h-px bg-gold mx-auto" />
+          <img src={dividerImage} alt="" className="w-40 md:w-56 mx-auto opacity-70" />
         </div>
 
         <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
@@ -49,63 +58,74 @@ const EventDetails = () => {
 
 interface EventCardProps {
   title: string;
+  date: string;
   time: string;
   venue: string;
   address: string;
-  dressCode: string;
   mapUrl: string;
   index: number;
 }
 
-const EventCard = ({ title, time, venue, address, dressCode, mapUrl, index }: EventCardProps) => {
+const EventCard = ({ title, date, time, venue, address, mapUrl, index }: EventCardProps) => {
   const { ref, isInView } = useInView({ threshold: 0.2 });
 
   return (
     <div 
       ref={ref}
-      className={`bg-card rounded-lg overflow-hidden shadow-soft transition-all duration-700 delay-${index * 200} ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+      className={`bg-card/80 backdrop-blur-sm rounded-lg overflow-hidden border border-primary/20 shadow-gold transition-all duration-700`}
+      style={{ 
+        transitionDelay: `${index * 200}ms`,
+        opacity: isInView ? 1 : 0,
+        transform: isInView ? 'translateY(0)' : 'translateY(30px)',
+      }}
     >
-      {/* Map */}
-      <div className="h-48 bg-muted">
-        <iframe
-          src={mapUrl}
-          className="w-full h-full border-0"
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-          title={`Map to ${venue}`}
-        />
+      {/* Header */}
+      <div className="bg-gradient-gold p-6 text-center">
+        <h3 className="font-display text-2xl md:text-3xl text-primary-foreground">{title}</h3>
       </div>
       
       {/* Content */}
-      <div className="p-6 md:p-8">
-        <h3 className="font-display text-2xl md:text-3xl font-medium text-foreground mb-6">{title}</h3>
-        
-        <div className="space-y-4">
-          <div className="flex items-start gap-4">
-            <Clock className="w-5 h-5 text-gold mt-0.5 flex-shrink-0" />
-            <div>
-              <p className="font-body text-sm text-muted-foreground uppercase tracking-wide mb-1">Time</p>
-              <p className="font-body text-foreground">{time}</p>
-            </div>
+      <div className="p-6 md:p-8 space-y-5">
+        <div className="flex items-start gap-4">
+          <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+            <Calendar className="w-5 h-5 text-primary" />
           </div>
-          
-          <div className="flex items-start gap-4">
-            <MapPin className="w-5 h-5 text-gold mt-0.5 flex-shrink-0" />
-            <div>
-              <p className="font-body text-sm text-muted-foreground uppercase tracking-wide mb-1">Venue</p>
-              <p className="font-body text-foreground font-medium">{venue}</p>
-              <p className="font-body text-muted-foreground text-sm mt-1">{address}</p>
-            </div>
-          </div>
-          
-          <div className="flex items-start gap-4">
-            <Shirt className="w-5 h-5 text-gold mt-0.5 flex-shrink-0" />
-            <div>
-              <p className="font-body text-sm text-muted-foreground uppercase tracking-wide mb-1">Dress Code</p>
-              <p className="font-body text-foreground">{dressCode}</p>
-            </div>
+          <div>
+            <p className="font-body text-xs text-muted-foreground uppercase tracking-wide mb-1">Tanggal</p>
+            <p className="font-heading text-foreground">{date}</p>
           </div>
         </div>
+        
+        <div className="flex items-start gap-4">
+          <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+            <Clock className="w-5 h-5 text-primary" />
+          </div>
+          <div>
+            <p className="font-body text-xs text-muted-foreground uppercase tracking-wide mb-1">Waktu</p>
+            <p className="font-heading text-foreground">{time}</p>
+          </div>
+        </div>
+        
+        <div className="flex items-start gap-4">
+          <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+            <MapPin className="w-5 h-5 text-primary" />
+          </div>
+          <div>
+            <p className="font-body text-xs text-muted-foreground uppercase tracking-wide mb-1">Tempat</p>
+            <p className="font-heading text-foreground">{venue}</p>
+            <p className="font-body text-muted-foreground text-sm mt-1">{address}</p>
+          </div>
+        </div>
+
+        <Button 
+          asChild
+          className="w-full mt-4 bg-primary hover:bg-primary/90 text-primary-foreground font-heading tracking-wide"
+        >
+          <a href={mapUrl} target="_blank" rel="noopener noreferrer">
+            <MapPin className="w-4 h-4 mr-2" />
+            Lihat di Peta
+          </a>
+        </Button>
       </div>
     </div>
   );

@@ -1,10 +1,12 @@
 import Navigation from '@/components/wedding/Navigation';
 import HeroSection from '@/components/wedding/HeroSection';
-import OurStory from '@/components/wedding/OurStory';
+import OpeningQuote from '@/components/wedding/OpeningQuote';
+import CoupleSection from '@/components/wedding/CoupleSection';
+import Countdown from '@/components/wedding/Countdown';
 import EventDetails from '@/components/wedding/EventDetails';
 import Gallery from '@/components/wedding/Gallery';
-import Countdown from '@/components/wedding/Countdown';
 import RsvpForm from '@/components/wedding/RsvpForm';
+import ClosingSection from '@/components/wedding/ClosingSection';
 import Footer from '@/components/wedding/Footer';
 
 const Index = () => {
@@ -12,11 +14,13 @@ const Index = () => {
     <main className="overflow-x-hidden">
       <Navigation />
       <HeroSection />
-      <OurStory />
+      <OpeningQuote />
+      <CoupleSection />
       <Countdown />
       <EventDetails />
       <Gallery />
       <RsvpForm />
+      <ClosingSection />
       <Footer />
     </main>
   );
