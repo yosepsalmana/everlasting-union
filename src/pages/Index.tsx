@@ -8,10 +8,18 @@ import Gallery from '@/components/wedding/Gallery';
 import RsvpForm from '@/components/wedding/RsvpForm';
 import ClosingSection from '@/components/wedding/ClosingSection';
 import Footer from '@/components/wedding/Footer';
+import FloatingLeaves from '@/components/animations/FloatingLeaves';
+import FlyingBirds from '@/components/animations/FlyingBirds';
+import FloatingPetals from '@/components/animations/FloatingPetals';
 
 const Index = () => {
   return (
-    <main className="overflow-x-hidden">
+    <main className="overflow-x-hidden relative">
+      {/* Global ambient animations */}
+      <FloatingLeaves />
+      <FlyingBirds />
+      <FloatingPetals />
+      
       <Navigation />
       <HeroSection />
       <OpeningQuote />
