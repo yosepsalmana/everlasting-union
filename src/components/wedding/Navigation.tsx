@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 
 const navLinks = [
-  { href: '#our-story', label: 'Our Story' },
-  { href: '#event', label: 'Event' },
-  { href: '#gallery', label: 'Gallery' },
+  { href: '#couple', label: 'Mempelai' },
+  { href: '#event', label: 'Acara' },
+  { href: '#gallery', label: 'Galeri' },
   { href: '#rsvp', label: 'RSVP' },
 ];
 
@@ -32,8 +32,8 @@ const Navigation = () => {
       <nav 
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
           isScrolled 
-            ? 'bg-background/95 backdrop-blur-md shadow-soft py-4' 
-            : 'bg-transparent py-6'
+            ? 'bg-background/95 backdrop-blur-md shadow-soft py-3 border-b border-primary/20' 
+            : 'bg-transparent py-5'
         }`}
       >
         <div className="container-wide flex items-center justify-between px-6">
@@ -43,9 +43,9 @@ const Navigation = () => {
               e.preventDefault();
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
-            className="font-display text-xl md:text-2xl text-foreground hover:text-gold transition-colors"
+            className="font-accent text-2xl md:text-3xl text-primary hover:text-primary/80 transition-colors"
           >
-            S & M
+            D & B
           </a>
 
           {/* Desktop Navigation */}
@@ -54,17 +54,17 @@ const Navigation = () => {
               <button
                 key={link.href}
                 onClick={() => handleNavClick(link.href)}
-                className="font-body text-sm tracking-wide text-muted-foreground hover:text-foreground transition-colors relative group"
+                className="font-heading text-sm tracking-widest text-muted-foreground hover:text-primary transition-colors relative group uppercase"
               >
                 {link.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-px bg-gold transition-all duration-300 group-hover:w-full" />
+                <span className="absolute -bottom-1 left-0 w-0 h-px bg-primary transition-all duration-300 group-hover:w-full" />
               </button>
             ))}
           </div>
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden text-foreground p-2"
+            className="md:hidden text-primary p-2"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -84,7 +84,7 @@ const Navigation = () => {
             <button
               key={link.href}
               onClick={() => handleNavClick(link.href)}
-              className={`font-display text-2xl text-foreground hover:text-gold transition-all duration-300 ${
+              className={`font-heading text-xl text-foreground hover:text-primary transition-all duration-300 tracking-widest uppercase ${
                 isMobileMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`}
               style={{ transitionDelay: isMobileMenuOpen ? `${index * 100}ms` : '0ms' }}
