@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useInView } from '@/hooks/useInView';
 import { X } from 'lucide-react';
 import dividerImage from '@/assets/javanese-divider.png';
+import ornamentFrame from '@/assets/javanese-ornament-corner.png';
 
 const galleryImages = [
   {
@@ -48,22 +49,30 @@ const Gallery = () => {
 
   return (
     <section id="gallery" className="section-padding bg-card relative overflow-hidden">
-      <div className="absolute inset-0 batik-pattern pointer-events-none opacity-20" />
-      <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-transparent to-background/30 pointer-events-none" />
+      <div className="absolute inset-0 batik-pattern pointer-events-none opacity-30" />
+      <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-transparent to-background/40 pointer-events-none" />
+      
+      {/* Corner ornaments */}
+      <img src={ornamentFrame} alt="" className="absolute bottom-8 left-4 w-20 md:w-28 opacity-40 -scale-y-100 animate-ornament-sway" />
+      <img src={ornamentFrame} alt="" className="absolute bottom-8 right-4 w-20 md:w-28 opacity-40 rotate-180 animate-ornament-sway" style={{ animationDelay: '1s' }} />
       
       <div className="container-wide relative z-10">
         <div 
           ref={ref}
-          className={`text-center mb-16 transition-all duration-700 ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+          className={`text-center mb-16 transition-all duration-1000 ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
         >
           <p className="elegant-subheading text-sm mb-4 tracking-[0.3em] uppercase">Galeri</p>
-          <h2 className="font-display text-3xl md:text-4xl text-foreground mb-6">
+          <h2 className="font-display text-3xl md:text-5xl text-foreground mb-8">
             Momen Bersama
           </h2>
-          <img src={dividerImage} alt="" className="w-40 md:w-56 mx-auto opacity-70" />
+          <img 
+            src={dividerImage} 
+            alt="" 
+            className={`w-44 md:w-64 mx-auto transition-all duration-1000 delay-200 ${isInView ? 'opacity-80 scale-100' : 'opacity-0 scale-90'}`}
+          />
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5">
           {galleryImages.map((image, index) => (
             <GalleryImage 
               key={image.id} 
@@ -78,20 +87,25 @@ const Gallery = () => {
       {/* Lightbox */}
       {selectedImage && (
         <div 
-          className="fixed inset-0 z-50 bg-background/98 flex items-center justify-center p-4 animate-fade-in"
+          className="fixed inset-0 z-50 bg-background/98 backdrop-blur-md flex items-center justify-center p-4 animate-fade-in"
           onClick={() => setSelectedImage(null)}
         >
           <button 
-            className="absolute top-6 right-6 text-foreground hover:text-primary transition-colors"
+            className="absolute top-6 right-6 text-foreground hover:text-primary transition-colors duration-300 hover:scale-110"
             onClick={() => setSelectedImage(null)}
           >
-            <X className="w-8 h-8" />
+            <X className="w-10 h-10" />
           </button>
-          <div className="relative border-4 border-primary/30 rounded-lg overflow-hidden shadow-gold">
+          <div className="relative">
+            <img 
+              src={ornamentFrame} 
+              alt="" 
+              className="absolute -inset-8 md:-inset-12 w-[calc(100%+64px)] md:w-[calc(100%+96px)] h-[calc(100%+64px)] md:h-[calc(100%+96px)] object-contain opacity-60 animate-glow-ambient"
+            />
             <img 
               src={selectedImage} 
               alt="Gallery view"
-              className="max-w-full max-h-[85vh] object-contain animate-scale-in"
+              className="max-w-full max-h-[80vh] object-contain rounded-lg border-4 border-primary/40 shadow-gold animate-scale-in"
             />
           </div>
         </div>
@@ -114,18 +128,24 @@ const GalleryImage = ({ src, alt, span, index, onClick }: GalleryImageProps) => 
   return (
     <div 
       ref={ref}
-      className={`${span} overflow-hidden rounded-lg cursor-pointer group transition-all duration-700 border-2 border-primary/20 hover:border-primary/50`}
-      style={{ animationDelay: `${index * 100}ms` }}
+      className={`${span} overflow-hidden rounded-lg cursor-pointer group border-2 border-primary/20 hover:border-primary/50 transition-all duration-700 ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+      style={{ transitionDelay: `${index * 100}ms` }}
       onClick={onClick}
     >
-      <div className={`relative h-full min-h-[200px] md:min-h-[250px] transition-all duration-500 ${isInView ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
+      <div className="relative h-full min-h-[180px] md:min-h-[240px]">
         <img 
           src={src} 
           alt={alt}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+          className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
           loading="lazy"
         />
-        <div className="absolute inset-0 bg-background/0 group-hover:bg-background/20 transition-colors duration-300" />
+        {/* Hover overlay */}
+        <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/20 transition-all duration-500" />
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+          <div className="w-12 h-12 rounded-full bg-background/80 flex items-center justify-center">
+            <span className="text-primary text-xl">+</span>
+          </div>
+        </div>
       </div>
     </div>
   );
